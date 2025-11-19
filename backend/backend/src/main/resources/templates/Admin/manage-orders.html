@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Orders</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            color: #444;
+            margin-bottom: 30px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .button-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .button-container button:hover {
+            background-color: #2980b9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        select, button {
+            padding: 8px 12px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        form {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+    
+        <form action="/admin/manage-products" method="get">
+            <button type="submit">Manage Products</button>
+        </form>
+        
+        <form action="/admin/dashboard" method="get">
+            <button type="submit">Dashboard</button>
+        </form>
+    
+        <form action="/admin/logout" method="get" onsubmit="return confirmLogout()">
+            <button type="submit"><span class="icon">🚪</span>Logout</button>
+        </form>
+    </div>
+<h2>All Orders</h2>
+
+<table border="1" cellpadding="10">
+    <thead>
+    <tr>
+        <th>Order ID</th>
+        <th>User</th>
+        <th>Products</th>
+        <th>Quantity</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <!-- Display Order ID -->
+        <td th:text="${order.id}">1</td>
+
+        <!-- Display User Username -->
+        <td th:text="${order.user.username}">Username</td>
+
+        <!-- Loop through order items and display the product names and quantities -->
+        <td>
+            <ul>
+                <li th:each="item : ${order.items}" th:text="${item.product.name}">Product Name</li>
+            </ul>
+        </td>
+        <td>
+            <ul>
+                <li th:each="item : ${order.items}" th:text="${item.quantity}">Quantity</li>
+            </ul>
+        </td>
+
+        <!-- Display Order Status -->
+        <td th:text="${order.status}">Pending</td>
+
+        <!-- Form to update the order status -->
+        <td>
+            <form th:action="@{/admin/orders/update}" method="post">
+                <input type="hidden" name="orderId" th:value="${order.id}" />
+                <select name="status">
+                    <option th:value="'Pending'" th:selected="${order.status == 'Pending'}">Pending</option>
+                    <option th:value="'Shipped'" th:selected="${order.status == 'Shipped'}">Shipped</option>
+                    <option th:value="'Delivered'" th:selected="${order.status == 'Delivered'}">Delivered</option>
+                </select>
+                <button type="submit">Update</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

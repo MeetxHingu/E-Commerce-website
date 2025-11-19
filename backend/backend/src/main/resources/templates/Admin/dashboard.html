@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 30px;
+        }
+
+        .button-container form {
+            margin: 10px;
+        }
+
+        .button-container button {
+            padding: 12px 30px;
+            font-size: 18px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+        }
+
+        .button-container button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .button-container button:active {
+            transform: scale(1);
+        }
+
+        .icon {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+<h2>Admin Dashboard</h2>
+
+<!-- Buttons for Admin Actions -->
+<div class="button-container">
+    <form action="/admin/manage-products" method="get">
+        <button type="submit">Manage Products</button>
+    </form>
+    <form action="/admin/manage-user" method="get">
+        <button type="submit">Manage Users</button>
+    </form>
+    <form action="/admin/orders" method="get">
+        <button type="submit">Manage orders</button>
+    </form>
+    <form action="/admin/logout" method="get" onsubmit="return confirmLogout()">
+        <button type="submit"><span class="icon">🚪</span>Logout</button>
+    </form>
+
+</div>
+<script>
+    function confirmLogout() {
+        return confirm("Are you sure you want to logout?");
+    }
+</script>
+</body>
+</html>

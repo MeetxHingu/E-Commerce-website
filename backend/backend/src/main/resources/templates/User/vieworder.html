@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Your Orders</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            padding: 40px;
+            margin: 0;
+            color: #333;
+        }
+    
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+    
+        table {
+            width: 95%;
+            margin: 0 auto 30px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+    
+        th, td {
+            padding: 14px 20px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        th {
+            background-color: #007bff;
+            color: white;
+            font-weight: 600;
+        }
+    
+        tr:last-child td {
+            border-bottom: none;
+        }
+    
+        a {
+            text-decoration: none;
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            margin: 5px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+    
+        a:hover {
+            background-color: #5a6268;
+        }
+    
+        p {
+            text-align: center;
+            margin-top: 15px;
+        }
+    
+        p a + a {
+            margin-left: 12px;
+        }
+    </style>
+    
+</head>
+<body>
+<h2>Your Orders</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Order ID</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Total Amount</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.id}">123</td>
+        <td th:text="${order.orderDate}">2025-04-20</td>
+        <td th:text="${order.status}">Pending</td>
+        <td th:text="${order.totalAmount + ' $'}">200 $</td>
+    </tr>
+    </tbody>
+</table>
+
+
+<p><a th:href="@{/user/cart}">← Back to Cart</a></p>
+<p><a th:href="@{/user/products}">← Back to Products</a></p>
+<p><a th:href="@{/user/userDashboard}">Dashboard</a></p>
+
+</body>
+</html>

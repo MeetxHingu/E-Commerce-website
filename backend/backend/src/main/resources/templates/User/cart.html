@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 40px;
+            margin: 0;
+        }
+    
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+    
+        table {
+            width: 95%;
+            margin: 0 auto 30px auto;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+    
+        th, td {
+            padding: 16px;
+            text-align: center;
+        }
+    
+        th {
+            background-color: #007bff;
+            color: white;
+            font-weight: 600;
+        }
+    
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    
+        form {
+            display: inline;
+        }
+    
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            font-size: 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        button:hover {
+            background-color: #2c80b4;
+        }
+    
+        /* Delete button specific */
+        td form button[style*="background-color:red"] {
+            background-color: #e74c3c !important;
+        }
+    
+        td form button[style*="background-color:red"]:hover {
+            background-color: #c0392b !important;
+        }
+    
+        form[method="get"] {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+    
+        form[method="get"] button {
+            background-color: #28a745;
+            padding: 12px 26px;
+            font-size: 16px;
+            border-radius: 8px;
+        }
+    
+        form[method="get"] button:hover {
+            background-color: #218838;
+        }
+    
+        p {
+            text-align: center;
+            margin-top: 15px;
+        }
+    
+        a {
+            text-decoration: none;
+            color: white;
+            background-color: #6c757d;
+            padding: 10px 16px;
+            border-radius: 6px;
+            margin: 5px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+    
+        a:hover {
+            background-color: #5a6268;
+        }
+    </style>
+    
+</head>
+<body>
+<h2>Your Shopping Cart</h2>
+
+<table border="1" cellpadding="10">
+    <thead>
+    <tr>
+        <th>Product</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${cart}">
+        <td th:text="${item.product.name}">Product Name</td>
+        <td th:text="${item.product.description}">Description</td>
+        <td th:text="${item.product.price + ' $'}">Price</td>
+        <td>
+            <!-- Decrease -->
+            <form th:action="@{/user/cart/decrease}" method="post" style="display:inline;">
+                <input type="hidden" name="cartId" th:value="${item.id}" />
+                <button type="submit">-</button>
+            </form>
+
+            <span th:text="${item.quantity}">1</span>
+
+            <!-- Increase -->
+            <form th:action="@{/user/cart/increase}" method="post" style="display:inline;">
+                <input type="hidden" name="cartId" th:value="${item.id}" />
+                <button type="submit">+</button>
+            </form>
+        </td>
+        <td th:text="${item.product.price * item.quantity + ' ₹'}">Subtotal</td>
+        <td>
+            <!-- Delete -->
+            <form th:action="@{/user/cart/delete}" method="post">
+                <input type="hidden" name="cartId" th:value="${item.id}" />
+                <button type="submit" style="background-color:red;color:white;">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Checkout -->
+<form th:action="@{/user/placeorder}" method="get">
+    <button type="submit">Checkout</button>
+</form>
+
+<p><a th:href="@{/user/products}">← Back to Products</a></p>
+<p><a th:href="@{/user/userDashboard}">← Back to Dashboard</a></p>
+</body>
+</html>

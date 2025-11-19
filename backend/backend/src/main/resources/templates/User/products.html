@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Products</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            padding: 40px;
+            margin: 0;
+        }
+    
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+    
+        table {
+            width: 90%;
+            margin: 0 auto 30px auto;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+    
+        th, td {
+            padding: 16px;
+            text-align: left;
+        }
+    
+        th {
+            background-color: #34495e;
+            color: white;
+            font-weight: 600;
+        }
+    
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        button:hover {
+            background-color: #2c80b4;
+        }
+    
+        a {
+            text-decoration: none;
+            background-color: #2ecc71;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 14px;
+            margin: 10px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+    
+        a:hover {
+            background-color: #27ae60;
+        }
+    
+        a + a {
+            margin-left: 12px;
+        }
+    
+        form {
+            margin: 0;
+        }
+    </style>
+    
+</head>
+<body>
+<h2>All Products</h2>
+
+<table border="1" cellpadding="10">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.name}">Product Name</td>
+        <td th:text="${product.description}">Description</td>
+        <td th:text="${product.price + ' ₹'}">Price</td>
+        <td>
+            <form th:action="@{/user/cart/add}" method="post">
+                <input type="hidden" name="productId" th:value="${product.id}" />
+                <button type="submit">Add to Cart</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/user/userDashboard">← Back to Dashboard</a>
+<a href="/user/cart">← go to cart</a>
+
+</body>
+</html>

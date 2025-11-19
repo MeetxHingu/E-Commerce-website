@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            padding: 40px;
+            margin: 0;
+            color: #333;
+        }
+    
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+    
+        p {
+            text-align: center;
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+    
+        table {
+            width: 95%;
+            margin: 0 auto 30px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+    
+        th, td {
+            padding: 14px 20px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        th {
+            background-color: #007bff;
+            color: white;
+            font-weight: 600;
+        }
+    
+        tr:last-child td {
+            border-bottom: none;
+        }
+    
+        .btn {
+            display: block;
+            margin: 0 auto;
+            padding: 12px 26px;
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        .btn:hover {
+            background-color: #218838;
+        }
+    
+        a {
+            text-decoration: none;
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            margin: 5px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+    
+        a:hover {
+            background-color: #5a6268;
+        }
+    
+        a + a {
+            margin-left: 12px;
+        }
+    
+        form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+    
+</head>
+<body>
+<p th:text="'Cart size: ' + ${cart.size()}"></p>
+<h2>Checkout</h2>
+
+<!-- Cart Review -->
+<table>
+    <thead>
+    <tr>
+        <th>Product</th>
+        <th>Description</th>
+        <th>Unit Price</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${cart}">
+        <td th:text="${item.product.name}">Product Name</td>
+        <td th:text="${item.product.description}">Description</td>
+        <td th:text="${item.product.price + ' $'}">Unit Price</td>
+        <td th:text="${item.quantity}">Quantity</td>
+        <td th:text="${item.product.price * item.quantity + ' $'}">Subtotal</td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Place Order Form -->
+<form th:action="@{/user/placeorder}" method="post">
+
+    <button type="submit" class="btn">Place Order</button>
+</form>
+
+<p><a th:href="@{/user/cart}">← Back to Cart</a></p>
+<p><a th:href="@{/user/products}">← Back to Products</a></p>
+<p><a th:href="@{/user/userDashboard}">← Back to Dashboard</a></p>
+</body>
+</html>
